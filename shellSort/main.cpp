@@ -13,6 +13,7 @@ inline unsigned __int64 GetCycleCount()
 
   
 //test github
+//test 2
 
 void generateNumbers(int a[], int len)
 {
