@@ -14,7 +14,7 @@ inline unsigned __int64 GetCycleCount()
   
 //test github
 //test 2
-
+//new branch
 void generateNumbers(int a[], int len)
 {
 	//srand((int)clock());
