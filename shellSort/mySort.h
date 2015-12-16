@@ -19,3 +19,8 @@ void merge2(int num[],int numTmp[], int start, int med, int end);
 int patitionForQuickSort(int num[], int start, int end);
 void quickSort(int num[], int start, int end);
 void  quickSort2(int num[], int start, int end);
+
+
+//¶ÑÅÅĞò
+void heapSort(int num[], int start, int end);
+void sinkForHeapSort(int num[], int pos, int start, int end);

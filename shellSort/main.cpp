@@ -4,6 +4,9 @@
 #include "sortForList.h"
 #include <time.h>
 #include <Windows.h>
+#include "myHeap.h"
+
+
 using namespace std;
 inline unsigned __int64 GetCycleCount()
 {
@@ -31,7 +34,7 @@ void copyArray(int in[], int out[], int len)
 		out[i]=in[i];
 	}
 }
-#define myLen 10
+#define myLen 5
 int _tmain(int argc, _TCHAR* argv[])
 {
 
@@ -128,7 +131,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout.precision(20);
 	cout<<"time elapsed:"<<time_elapsed<<endl;
 
-
+	/////////////////////////////////////////////////
 	copyArray(origNum2, origNum, myLen);
 	myNode* res = makeListByArray(origNum,myLen);
 	showList(res);
@@ -136,8 +139,48 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout<<"afte sort:"<<endl;
 	showList(res);
 	deleteList(res);
+	/////////////////////////////////////
+	copyArray(origNum2, origNum, myLen);
+	cout<<endl;
+	showArray(origNum, myLen);
+	cout<<"afte heapSort:"<<endl;
+	heapSort(origNum, 0, myLen-1);
+	showArray(origNum, myLen);
+	cout<<endl;
+
+	////////////////////////////////////
+	int origNum3[]={2,5,3,1,8};
+	cout<<"indexPriorityQueue"<<endl;
+	copyArray(origNum3, origNum, myLen);
+	showArray(origNum, myLen);
+	auto q=new priorityQueueWithIndex(origNum, myLen);
+	cout<<endl<<"show heap:"<<endl;
+	q->showHeap();
+	cout<<endl;
+	q->deleteMin();
+	cout<<endl<<"show heap:"<<endl;
+	q->showHeap();
+	cout<<endl;
+	q->deleteMin();
+
+	cout<<endl<<"show heap:"<<endl;
+	q->showHeap();
+	cout<<endl;	
+
+	q->insertWithCheck(4);
+	cout<<endl<<"show heap:"<<endl;
+	q->showHeap();
+	cout<<endl;
+
+	q->change(2,67);
+	cout<<endl<<"show heap:"<<endl;
+	q->showHeap();
+	cout<<endl;
+
+	cout<<"afte Sorted:"<<endl;
+	for(int i=0;i<myLen;i++)
+		cout<<q->deleteMin()<<" ,";
 
 	char end;
 	cin>>end;
-	return 0;
 }

@@ -79,6 +79,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="myHeap.h" />
     <ClInclude Include="mySort.h" />
     <ClInclude Include="sortForList.h" />
     <ClInclude Include="stdafx.h" />
@@ -86,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="myHeap.cpp" />
     <ClCompile Include="mySort.cpp" />
     <ClCompile Include="sortForList.cpp" />
     <ClCompile Include="stdafx.cpp">

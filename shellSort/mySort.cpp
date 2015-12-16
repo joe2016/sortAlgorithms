@@ -235,3 +235,42 @@ void  quickSort2(int num[], int start, int end)//三向切分的快速排序
 	quickSort2(num, start, eqHead-1);//小于v的区域进行排序
 	quickSort2(num, beforeBgHead+1, end);//大于v的区域进行排序
 }
+
+
+
+void heapSort(int num[], int start, int end)
+{
+	//从最后一个非叶子节点开始往前调用sink调整堆
+	//调用完之后该节点之后的节点都是已调整好的小堆
+	//当根节点调用完成之后形成一个已调整好的大堆
+	for(int i=(start+end-1)/2;i>=start;i--)
+		sinkForHeapSort(num, i, start, end);//大顶堆
+	
+	//直到堆的大小为1，则数组升序排序完成
+	for(int j=end;j>=start;)
+	{
+		swap(num[start], num[j]);//将堆顶的元素（最大值）与堆的最后一个节点交换
+		j--;//缩小堆
+		sinkForHeapSort(num, start, start, j);//重新调整堆
+	}
+
+}
+
+//对pos位置的元素进行调整，使其下降到正确的位置
+void sinkForHeapSort(int num[], int pos, int start, int end)
+{
+	//(childPos+start-1)/2=parentPos
+	if(pos<start||start>end) return;
+	int childPos=pos*2-start+1;//左边子节点的坐标
+	while(childPos<end)//如果有左边子节点和右边子节点
+	{
+		if(num[childPos]<num[childPos+1]) childPos++;//如果右边子节点比较大，则用右边子节点与父节点进行比较
+		if(num[pos]>=num[childPos])break;//如果父节点比子节点都要大，则退出循环
+		swap(num[pos], num[childPos]);//如果父节点较小，则与较大的子节点交换
+		pos=childPos;//继续往下沉
+		childPos=pos*2-start+1;
+	}
+	//只有左边子节点时，直接与左边子节点进行比较
+	if(childPos==end && num[pos]<num[childPos]) swap(num[pos], num[childPos]);
+
+}
