@@ -5,6 +5,7 @@
 #include <time.h>
 #include <Windows.h>
 #include "myHeap.h"
+#include "myTree.h"
 
 
 using namespace std;
@@ -70,18 +71,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 
 	generateNumbers(origNum2,myLen);
-	//////////////////////
-	copyArray(origNum2, origNum, myLen);
-	cout<<endl<<"shellSort:";
-//	showArray(origNum, myLen);
-	QueryPerformanceCounter((LARGE_INTEGER *)&begin_time);
-	shellSort(origNum,2, myLen-1);
-//	showArray(origNum, myLen);
-
-	QueryPerformanceCounter((LARGE_INTEGER *)&end_time);
-	time_elapsed = (end_time - begin_time) / time_fre;
-	cout.precision(20);
-	cout<<"time elapsed:"<<time_elapsed<<endl;
 
 	//////////////////////////////////////
 	cout<<endl<<"mergeSort1:";
@@ -95,91 +84,43 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout.precision(20);
 	cout<<"time elapsed:"<<time_elapsed<<endl;
 
-
-	//////////////////////
-	copyArray(origNum2, origNum, myLen);
-	cout<<endl<<"mergeSort3:";
-
-	QueryPerformanceCounter((LARGE_INTEGER *)&begin_time);
-	mergeSort3(origNum, myLen);
-
-	QueryPerformanceCounter((LARGE_INTEGER *)&end_time);
-	time_elapsed = (end_time - begin_time) / time_fre;
-	cout.precision(20);
-	cout<<"time elapsed:"<<time_elapsed<<endl;
-	////////////////////////
-	copyArray(origNum2, origNum, myLen);
-	cout<<endl<<"quickSort:";
-
-	QueryPerformanceCounter((LARGE_INTEGER *)&begin_time);
-	quickSort(origNum,0,myLen-1);
-
-	QueryPerformanceCounter((LARGE_INTEGER *)&end_time);
-	time_elapsed = (end_time - begin_time) / time_fre;
-	cout.precision(20);
-	cout<<"time elapsed:"<<time_elapsed<<endl;
-
-	//////////////////////
-
-	copyArray(origNum2, origNum, myLen);
+/////////////////////////////////////////////////
 	
-	cout<<"quickSort2:";
-	QueryPerformanceCounter((LARGE_INTEGER *)&begin_time);
-	quickSort2(origNum, 0, myLen-1);
-	QueryPerformanceCounter((LARGE_INTEGER *)&end_time);
-	time_elapsed = (end_time - begin_time) / time_fre;
-	cout.precision(20);
-	cout<<"time elapsed:"<<time_elapsed<<endl;
-
-	/////////////////////////////////////////////////
 	copyArray(origNum2, origNum, myLen);
-	myNode* res = makeListByArray(origNum,myLen);
-	showList(res);
-	quickSortForList(res);
-	cout<<"afte sort:"<<endl;
-	showList(res);
-	deleteList(res);
-	/////////////////////////////////////
-	copyArray(origNum2, origNum, myLen);
-	cout<<endl;
-	showArray(origNum, myLen);
-	cout<<"afte heapSort:"<<endl;
-	heapSort(origNum, 0, myLen-1);
-	showArray(origNum, myLen);
-	cout<<endl;
+	cout<<"BST test:"<<endl;
+	showArray(origNum2, myLen);
 
-	////////////////////////////////////
-	int origNum3[]={2,5,3,1,8};
-	cout<<"indexPriorityQueue"<<endl;
-	copyArray(origNum3, origNum, myLen);
-	showArray(origNum, myLen);
-	auto q=new priorityQueueWithIndex(origNum, myLen);
-	cout<<endl<<"show heap:"<<endl;
-	q->showHeap();
-	cout<<endl;
-	q->deleteMin();
-	cout<<endl<<"show heap:"<<endl;
-	q->showHeap();
-	cout<<endl;
-	q->deleteMin();
-
-	cout<<endl<<"show heap:"<<endl;
-	q->showHeap();
-	cout<<endl;	
-
-	q->insertWithCheck(4);
-	cout<<endl<<"show heap:"<<endl;
-	q->showHeap();
-	cout<<endl;
-
-	q->change(2,67);
-	cout<<endl<<"show heap:"<<endl;
-	q->showHeap();
-	cout<<endl;
-
-	cout<<"afte Sorted:"<<endl;
+	auto myBST=new BST();
 	for(int i=0;i<myLen;i++)
-		cout<<q->deleteMin()<<" ,";
+	{
+		myBST->put(origNum2[i], i);
+	}
+
+	myBST->deleteNode(origNum2[2]);
+	myBST->put(origNum2[2],2);
+
+
+	myBST->inorder();
+
+	cout<<"get() test"<<endl;
+	for(int i=0; i<myLen;i++)
+		cout<<myBST->get(origNum2[i])->_val<<" ";
+	cout<<endl;
+
+	cout<<"select() test"<<endl;
+	for(int i=0; i<myLen;i++)
+		cout<<myBST->select(i+1)->_key<<" ";
+	cout<<endl;
+
+	cout<<"rank() test"<<endl;
+	for(int i=0; i<myLen;i++)
+		cout<<myBST->rank(origNum2[i])<<" ";
+	cout<<endl;
+
+	cout<<"floor() test"<<endl;
+	cout<<myBST->floor(20)<<" ";
+	cout<<endl;
+
 
 	char end;
 	cin>>end;

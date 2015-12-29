@@ -14,11 +14,12 @@ inline void swap(int &a, int &b)
 
 void showArray(int num[], int len)
 {
-	
+	cout<<"the original data is:"<<endl;
 	for(int i=0;i<len;i++)
 	{
 		cout<<num[i]<<", ";
 	}
+	cout<<endl;
 }
 
 int shellSort(int num[], int start, int end)//Ï£¶ûÅÅÐò
