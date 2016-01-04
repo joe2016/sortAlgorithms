@@ -79,6 +79,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="myHashTable.h" />
     <ClInclude Include="myHeap.h" />
     <ClInclude Include="mySort.h" />
     <ClInclude Include="myTree.h" />
@@ -88,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="myHashTable.cpp" />
     <ClCompile Include="myHeap.cpp" />
     <ClCompile Include="mySort.cpp" />
     <ClCompile Include="myTree.cpp" />

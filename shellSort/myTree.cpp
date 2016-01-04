@@ -3,15 +3,19 @@
 #include <iostream>
 
 treeNode::treeNode(int key, int val, treeNode* left, treeNode* right)
-	:_key(key), _val(val), _left(left), _right(right), _nodeNum(1)
+	:_key(key), _val(val), _left(left), _right(right), _nodeNum(1), _color(BLACK)
 {
 	
 }
 treeNode::treeNode(int key, int val)
-	:_key(key), _val(val), _nodeNum(1)
+	:_key(key), _val(val), _nodeNum(1), _color(BLACK)
 {
 }
 
+treeNode::treeNode(int key, int val, bool color)
+	:_key(key), _val(val), _nodeNum(1), _color(color)
+{
+}
 
 
 BST::BST()
@@ -206,4 +210,85 @@ treeNode* BST::removeNode(treeNode* &root, int key)//(!)这里用指针的引用，因为会
 		return res;
 	}
 
+}
+
+bool RedBlackBST::isRed(treeNode* N)
+{
+	if(N && (N->_color==RED)) return true;
+	return false;
+}
+
+treeNode* RedBlackBST::rotateLeft(treeNode* N)
+{
+//	if(N==nullptr || (N->_right==nullptr)|| (N->_right->_color!=RED)) return N;
+
+	//将N和他的右子节点互换位置，同时rightNode的左子树移动到N的右子树
+	treeNode* rightNode=N->_right;
+	N->_right=rightNode->_left;
+	rightNode->_left=N;
+	//颜色互换
+	rightNode->_color=N->_color;
+	N->_color=RED;
+	//更新节点数目
+	rightNode->_nodeNum=N->_nodeNum;
+	N->_nodeNum=1+size(N->_left)+size(N->_right);
+	return rightNode;
+}
+
+treeNode* RedBlackBST::rotateRight(treeNode* N)//实现刚好与左旋转相反
+{
+	treeNode* leftNode=N->_left;
+	N->_left=leftNode->_right;
+	leftNode->_right=N;
+	//颜色互换
+	leftNode->_color=N->_color;
+	N->_color=RED;
+	//更新节点数
+	leftNode->_nodeNum=N->_nodeNum;
+	N->_nodeNum=1+size(N->_left)+size(N->_right);
+	return leftNode;
+
+}
+
+void RedBlackBST::changeColor(treeNode* N)
+{
+	N->_color=RED;//父节点变为红，表示与祖父节点结合形成一个3节点
+	N->_left->_color=BLACK;
+	N->_right->_color=BLACK;
+}
+
+void RedBlackBST::put(int key, int val)//添加键值为key，值为val的节点
+{
+	_root=put(_root, key, val);
+	_root->_color=BLACK;//根节点为黑
+
+}
+
+treeNode* RedBlackBST::put(treeNode* root, int key, int val)
+{
+	if(root==nullptr) return new treeNode(key, val, RED);//默认新节点为红
+	if(key < root->_key) root->_left=put(root->_left, key, val);
+	else if(key > root->_key) root->_right=put(root->_right, key, val);
+	else 
+	{
+		root->_val=val;
+		return root;
+	}
+	root->_nodeNum=size(root->_left)+size(root->_right)+1;
+	if(!isRed(root->_left) && isRed(root->_right)) root=rotateLeft(root);
+	if(isRed(root->_left) && isRed(root->_left->_left)) root=rotateRight(root);
+	if(isRed(root->_left) && isRed(root->_right)) changeColor(root);
+
+	return root;
+}
+
+
+int RedBlackBST::deleteMin()//删除键值最小的节点（释放内存）
+{
+	return 0;
+}
+
+bool RedBlackBST::deleteNode(int key)//删除键值为key的节点（释放内存）
+{
+	return false;
 }
