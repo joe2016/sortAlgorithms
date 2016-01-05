@@ -183,14 +183,15 @@ bool  BST::deleteNode(int key)
 	
 }
 
+
 treeNode* BST::removeNode(treeNode* &root, int key)//(!)这里用指针的引用，因为会改变实参（指针）的内容
 {
 	if(root==nullptr) return root;//没找到
-	if(key< root->_key) return removeNode(root->_left, key);
-	else if(key> root->_key) return removeNode(root->_right, key);
+	treeNode* res=nullptr;
+	if(key< root->_key) res= removeNode(root->_left, key);
+	else if(key> root->_key) res= removeNode(root->_right, key);
 	else //找到
 	{
-		treeNode* res=root;//要返回的节点
 		if(root->_left==nullptr)//如果只有一个或0个子树，则直接将存在的子树（或空）代替当前节点
 		{
 			root=root->_right;
@@ -204,13 +205,16 @@ treeNode* BST::removeNode(treeNode* &root, int key)//(!)这里用指针的引用，因为会
 		{
 			treeNode* rootNew=removeMinNode(root->_right);
 			rootNew->_left=root->_left;
-			rootNew->_right=root->_right;
+			if(rootNew!=root->_right)//（！）如果右子树的最小节点刚好是root的右子节点，则不需要处理
+				rootNew->_right=root->_right;
 			root=rootNew;
 		}
-		return res;
 	}
+	root->_nodeNum=size(root->_left)+size(root->_right)+1;
+	return res;
 
 }
+
 
 bool RedBlackBST::isRed(treeNode* N)
 {
