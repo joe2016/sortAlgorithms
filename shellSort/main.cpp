@@ -6,6 +6,8 @@
 #include <Windows.h>
 #include "myHeap.h"
 #include "myTree.h"
+#include "myHashTable.h"
+
 
 
 using namespace std;
@@ -15,6 +17,12 @@ inline unsigned __int64 GetCycleCount()
  __asm _emit 0x31
 }
 
+class A
+{
+public:
+	~A(){cout<<"over!a="<<a<<endl;}
+	int a;
+};
   
 //test github
 //test 2
@@ -35,7 +43,7 @@ void copyArray(int in[], int out[], int len)
 		out[i]=in[i];
 	}
 }
-#define myLen 5
+#define myLen 80
 int _tmain(int argc, _TCHAR* argv[])
 {
 
@@ -107,11 +115,6 @@ int _tmain(int argc, _TCHAR* argv[])
 		cout<<myBST->get(origNum2[i])->_val<<" ";
 	cout<<endl;
 
-	cout<<"select() test"<<endl;
-	for(int i=0; i<myLen;i++)
-		cout<<myBST->select(i+1)->_key<<" ";
-	cout<<endl;
-
 	cout<<"rank() test"<<endl;
 	for(int i=0; i<myLen;i++)
 		cout<<myBST->rank(origNum2[i])<<" ";
@@ -120,7 +123,52 @@ int _tmain(int argc, _TCHAR* argv[])
 	cout<<"floor() test"<<endl;
 	cout<<myBST->floor(20)<<" ";
 	cout<<endl;
+	delete myBST;
+////////////////////////////////////
+	showArray(origNum2, myLen);
+	cout<<endl;
 
+	cout<<"SeparateChainingHashST test"<<endl;
+	SeparateChainingHashST mySC(5);
+	for(int i=0;i<myLen;i++)
+	{
+		mySC.put(origNum2[i], i);
+	}
+	mySC.showChains();
+	cout<<endl<<"get test"<<endl;
+	for(int i=0;i<myLen;i++)
+	{
+		cout<<mySC.get(origNum2[i])->_val<<" ";
+	}
+	cout<<endl;
+
+	////////////////////////////////////
+	cout<<"LinearProbingHashST test"<<endl;
+	LinearProbingHashST myLP;
+	for(int i=0;i<myLen;i++)
+		myLP.put(origNum2[i], i);
+
+	myLP.show();
+	cout<<endl<<"get test"<<endl;
+	for(int i=0;i<myLen;i++)
+		cout<<myLP.get(origNum2[i])->_val<<" ";
+	cout<<endl;
+	for(int i=0;i<8;i++)
+		myLP.deleteNode(origNum2[i]);
+
+	cout<<"deleteNode test"<<endl;
+	cout<<"the data have been deleted:"<<endl;
+	ChainNode* N=nullptr;
+	for(int i=0;i<myLen;i++)
+	{
+		N=myLP.get(origNum2[i]);
+		if(N==nullptr)
+			cout<<origNum2[i]<<" ";
+	}
+	cout<<endl;
+		
+
+	cout<<"end of the page!"<<endl;
 
 	char end;
 	cin>>end;
